@@ -1,7 +1,6 @@
 package ImageExtraction;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -38,8 +37,8 @@ public class ImageExtractAndTest {
 		 * Get data files
 		 */
 	
-		File image_file = new File(face1_train_dir);
-		File label_file = new File(face2_train_dir);
+		File image_file = new File(img1_train_dir);
+		File label_file = new File(img2_train_dir);
 		
 		/*
 		 * Create array to store objects
@@ -82,9 +81,15 @@ public class ImageExtractAndTest {
 					}
 				}else {
 					if(line.trim().length() == 0){
-						break;
+						if(t.isObject()) {
+							break;
+						}else {
+							t.reset();
+							start = false;
+						}
+					}else {
+						t.addToObject(line);
 					}
-					t.addToObject(line);
 				}
 			}
 			TO_arr.add(t);
@@ -99,7 +104,14 @@ public class ImageExtractAndTest {
 		image_fr.close();
 		data_fr.close();
 		
-		TO_arr.get(100).printObject();
+		/*
+		for(TestObject t : TO_arr) {
+			t.printObjectToFile();
+		}
+		*/
+		
+		TO_arr.get(88).printObject();
+		TO_arr.get(88).printEdges();
 	}
 
 }
