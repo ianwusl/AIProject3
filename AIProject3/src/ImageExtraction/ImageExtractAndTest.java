@@ -8,6 +8,9 @@ import java.util.ArrayList;
 
 import objects.TestObject;
 
+/*
+ * Author : Charmian Goh
+ */
 public class ImageExtractAndTest {
 	
 	//number image class paths
