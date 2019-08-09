@@ -71,6 +71,7 @@ public class ImageExtractAndTest {
 		while((data = data_br.readLine()) != null) {
 			int int_data = Integer.parseInt(data);
 			TestObject t = new TestObject(int_data);
+
 			boolean start = false;
 			String line = "";
 			while((line = image_br.readLine()) != null) {
@@ -92,7 +93,9 @@ public class ImageExtractAndTest {
 					}
 				}
 			}
-			TO_arr.add(t);
+			if(t.data == 6) {
+				TO_arr.add(t);
+			}
 		}
 
 		
@@ -110,8 +113,23 @@ public class ImageExtractAndTest {
 		}
 		*/
 		
-		TO_arr.get(88).printObject();
-		TO_arr.get(88).printEdges();
+
+		//TO_arr.get(2).printEdges();
+		//TO_arr.get(97).printObject();
+		//System.out.println(TO_arr.get(97).loopnum());
+		
+		int loop = 0;
+		for(int i = 0; i < TO_arr.size(); i++) {
+			System.out.println(i);
+			int j = TO_arr.get(i).loopnum();
+			System.out.println(j);
+			loop +=j;
+		}
+		
+		System.out.println(loop);
+		System.out.println(TO_arr.size());
+		
+		
 	}
 
 }
