@@ -5,6 +5,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import objects.Digit;
+import objects.Face;
 import objects.TestObject;
 
 /*
@@ -70,8 +72,8 @@ public class ImageExtractAndTest {
 		 */
 		while((data = data_br.readLine()) != null) {
 			int int_data = Integer.parseInt(data);
-			TestObject t = new TestObject(int_data);
-
+			//TestObject t = new Face(int_data);
+			TestObject t = new Digit(int_data);
 			boolean start = false;
 			String line = "";
 			while((line = image_br.readLine()) != null) {
