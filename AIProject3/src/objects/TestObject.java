@@ -14,29 +14,30 @@ public class TestObject {
 	public int data;
 	public int assigned_data;
 	int length = 0;
-	
+
 	public TestObject(int data) {
 		object = new ArrayList<>();
 		object_edges = new ArrayList<>();
 		this.data = data;
 	}
-	
+
 	public void addToObject(String s) {
 		if(s.length() > length) {
 			length = s.length();
 		}
 		char[] arr = s.toCharArray();
+		/*
 		for(int i = 1; i < arr.length -1 ; i++) {
 			if(arr[i]== ' ') {
 				if(arr[i-1] != ' ' && arr[i+1] != ' ')  {
 					arr[i] = '1';
 				}
 			}
-		}
+		}*/
 		s = new String(arr);
 		object.add(s);
 	}
-	
+
 	public void printObject() {
 		for(String s: object) {
 			System.out.println(s);
@@ -49,7 +50,7 @@ public class TestObject {
 		}
 		System.out.println("data: " + data);
 	}
-	
+
 	public void printObjectToFile() throws IOException {
 		this.edges();
 		File file = new File("src/data/digitdata/sampletest");
@@ -61,11 +62,9 @@ public class TestObject {
 		for(String s: object) {
 			writer.append(s);
 			writer.newLine();
-			
+
 		}
 		writer.append("data: " + data);
-		writer.newLine();
-		writer.append("loops: " + this.loopnum());
 		writer.newLine();
 		writer.close();
 	}
@@ -74,12 +73,12 @@ public class TestObject {
 		for(int i = 0; i < object.size(); i ++) {
 			String s = object.get(i).replace('+', '1').replace('#', '1');
 			char[] s_arr = s.toCharArray();
-			
+
 			object_2D[i] = s_arr;
 		}
 		return object_2D;
 	}
-	
+
 	public char[][] edges() {
 		char[][] object_2D = new char[object.size()][length];
 		for(int i = 0; i < object.size(); i ++) {
@@ -103,60 +102,61 @@ public class TestObject {
 				}else {
 					object_ret[i][j] = '1';
 				}
-				//System.out.print(object_2D[i][j]);
 			}
-			//System.out.println();
 		}
-		
+
 		for(int i= 0; i<object.size(); i++) {
 			char[] arr = object_ret[i];
 			String s = new String(arr);
 			if(s != null) {
 				object_edges.add(s);
 			}
-			
+
 		}
-		
+
 		return object_ret;
 	}
-	
-	public int loopnum() {
-		
+
+	public boolean hasLoops() {
+
 		char[][] obj = this.object2D();
 		char[][] edges = this.edges();
-		this.printObject();
-		//LoopDetection ld = new LoopDetection(obj);
+		LoopDetection ld1 = new LoopDetection(edges);
 		LoopDetection ld2 = new LoopDetection(obj);
-		int i = ld2.highest_count();
-		//int j = ld2.highest_count();
-		
-		return i; //> j? i: j;
+		int i = ld1.loop_count();
+		int j = ld2.loop_count();
+		int k = i > j? i : j;
+		if(k == 0){
+			this.printObject();
+		}
+		return k > 0? true : false;
+
 	}
 
-	
+
 	public void assign_value(int i) {
 		assigned_data = i;
 	}
-	
+
 	public boolean checkData() {
 		if(assigned_data == data) {
 			return true;
 		}
 		return false;
 	}
-	
-	
+
+
 	public boolean isObject() {
 		if(object.size()>=10) {
 			return true;
 		}
 		return false;
 	}
-	
+
 	public void reset() {
 		object.clear();
 	}
-	
+
 	public boolean inbounds(int i, int j) {
 		if(!(i >= 0 && i <object.size())) {
 			return false;

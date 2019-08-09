@@ -11,7 +11,7 @@ import objects.TestObject;
  * Author : Charmian Goh
  */
 public class ImageExtractAndTest {
-	
+
 	//number image class paths
 	private static final String img1_test_dir = "src/data/digitdata/testimages";
 	private static final String img2_test_dir = "src/data/digitdata/testlabels";
@@ -19,7 +19,7 @@ public class ImageExtractAndTest {
 	private static final String img2_train_dir = "src/data/digitdata/traininglabels";
 	private static final String img1_valid_dir = "src/data/digitdata/validationimages";
 	private static final String img2_valid_dir = "src/data/digitdata/validationlabels";
-	
+
 	//face image class paths
 	private static final String face1_test_dir = "src/data/facedata/facedatatest";
 	private static final String face2_test_dir = "src/data/facedata/facedatatestlabels";
@@ -32,20 +32,20 @@ public class ImageExtractAndTest {
 
 
 	public static void main(String[] args) throws IOException {
-		
+
 		/*
 		 * Get data files
 		 */
-	
+
 		File image_file = new File(img1_train_dir);
 		File label_file = new File(img2_train_dir);
-		
+
 		/*
 		 * Create array to store objects
 		 */
 		ArrayList<TestObject> TO_arr = new ArrayList<>();
-		
-		
+
+
 		/*
 		 * Check that file exists
 		 * Get files from file reader
@@ -56,15 +56,15 @@ public class ImageExtractAndTest {
 		}
 		FileReader image_fr = new FileReader(image_file);
 		FileReader data_fr = new FileReader(label_file);
-		
+
 		/*
 		 * Use buffered reader to read from the file input stream (file reader)
 		 */
 		BufferedReader image_br = new BufferedReader(image_fr);
 		BufferedReader data_br = new BufferedReader(data_fr);
-		
+
 		String data = "";
-		
+
 		/*
 		 * Image extraction begins here
 		 */
@@ -93,12 +93,10 @@ public class ImageExtractAndTest {
 					}
 				}
 			}
-			if(t.data == 6) {
-				TO_arr.add(t);
-			}
+
 		}
 
-		
+
 		/*
 		 * Close all readers
 		 */
@@ -106,30 +104,9 @@ public class ImageExtractAndTest {
 		data_br.close();
 		image_fr.close();
 		data_fr.close();
-		
-		/*
-		for(TestObject t : TO_arr) {
-			t.printObjectToFile();
-		}
-		*/
-		
 
-		//TO_arr.get(2).printEdges();
-		//TO_arr.get(97).printObject();
-		//System.out.println(TO_arr.get(97).loopnum());
-		
-		int loop = 0;
-		for(int i = 0; i < TO_arr.size(); i++) {
-			System.out.println(i);
-			int j = TO_arr.get(i).loopnum();
-			System.out.println(j);
-			loop +=j;
-		}
-		
-		System.out.println(loop);
-		System.out.println(TO_arr.size());
-		
-		
+
+
 	}
 
 }
