@@ -34,7 +34,8 @@ public class TestObject {
 	public char[][] object2D() {
 		char[][] object_2D = new char[object.size()][length];
 		for(int i = 0; i < object.size(); i ++) {
-			String s = object.get(i).replace('+', '1').replace('#', '1');
+			String s = object.get(i).replace('+', '0').replace('#', '1').replace(' ', '0');
+
 			char[] s_arr = s.toCharArray();
 
 			object_2D[i] = s_arr;
@@ -45,7 +46,7 @@ public class TestObject {
 	public int[][] getIntImage() {
 		int[][] object_2D = new int[object.size()][length];
 		for(int i = 0; i < object.size(); i ++) {
-			String s = new String(object.get(i)).replace(" ", "0").replace("+", "1").replace("#", "2");
+			String s = new String(object.get(i)).replace('+', '0').replace('#', '1').replace(' ', '0');
 			for(int j = 0 ; j < s.length(); j++){
 				String num = s.charAt(j) + "";
 				object_2D[i][j] = Integer.parseInt(num);
@@ -69,7 +70,7 @@ public class TestObject {
 	private Cell[][] createCellArray(){
 		int[][] obj = this.getIntImage();
 		Cell[][] cells = new Cell[28][28];
-		
+
 		//fill up all cells
 		for(int i = 0; i < 28; i++){
 			for(int j = 0 ; j < 28; j++){
@@ -77,7 +78,7 @@ public class TestObject {
 				cells[i][j] = c;
 			}
 		}
-			
+
 		for(int i = 0; i < obj.length; i++){
 			for(int j = 0 ; j < obj[0].length; j++){
 				Cell c = new Cell(j,i,obj[i][j]);
@@ -89,7 +90,7 @@ public class TestObject {
 
 	public Cell[][] getCellArray(){
 		if(cell_arr == null){
-			cell_arr = this.createCellArray();	
+			cell_arr = this.createCellArray();
 		}
 		return cell_arr;
 	}

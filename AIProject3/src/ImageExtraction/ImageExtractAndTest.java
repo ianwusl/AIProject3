@@ -15,7 +15,7 @@ public class ImageExtractAndTest {
 		ImageExtraction extract = new ImageExtraction();
 		ArrayList<Digit> digits = extract.digitExtract(ImageExtraction.Type.DIGIT_TRAIN, new double[10], 0);
 		NaiveBayes nb = new NaiveBayes(extract.getDigit_frequency(),
-				Digit.getPrior(extract.getDigit_frequency(), extract.getTotal()), 1, digits);
+				Digit.getPrior(extract.getDigit_frequency(), extract.getTotal()),1, digits);
 
 		ArrayList<Digit> digits_test = extract.digitExtract(ImageExtraction.Type.DIGIT_TEST, new double[10], 0);
 		int matched = 0;

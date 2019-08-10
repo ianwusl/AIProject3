@@ -43,7 +43,7 @@ public class NaiveBayes {
 	public boolean testDigit(Digit d, int k){
 		Cell[][] img = d.getCellArray();
 		double[] probability = new double[10];
-		
+
 		//transfer priors to new array
 		for(int i = 0 ; i < 10 ; i++){
 			probability[i] = priors[i];
@@ -58,7 +58,7 @@ public class NaiveBayes {
 			for(int i = 0; i < 28; i++){
 				for(int j = 0; j < 28; j++){
 					if(img[i][j].getData()!=0){
-						probability[digit] += Math.log((likelihood[digit][i][j] + k /frequency[digit])) ;
+						probability[digit] += Math.log((likelihood[digit][i][j] + k /frequency[digit]*k*2)) ;
 					}
 				}
 			}
@@ -71,6 +71,7 @@ public class NaiveBayes {
 				best_p = i;
 			}
 		}
+
 		d.assign_value(best_p);
 		return d.checkData();
 	}
