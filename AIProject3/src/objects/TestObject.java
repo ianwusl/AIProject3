@@ -44,7 +44,8 @@ public class TestObject {
 	}
 
 	public int[][] getIntImage() {
-		int[][] object_2D = new int[object.size()][length];
+		length = object.size() > length ? object.size() : length;
+		int[][] object_2D = new int[length][length];
 		for(int i = 0; i < object.size(); i ++) {
 			String s = new String(object.get(i)).replace('+', '0').replace('#', '1').replace(' ', '0');
 			for(int j = 0 ; j < s.length(); j++){
@@ -61,6 +62,8 @@ public class TestObject {
 	}
 
 	public boolean checkData() {
+		//System.out.println("assigned data = " + assigned_data);
+		//System.out.println("actual data = " + data);
 		if(assigned_data == data) {
 			return true;
 		}
@@ -69,11 +72,11 @@ public class TestObject {
 
 	private Cell[][] createCellArray(){
 		int[][] obj = this.getIntImage();
-		Cell[][] cells = new Cell[28][28];
+		Cell[][] cells = new Cell[length][length];
 
 		//fill up all cells
-		for(int i = 0; i < 28; i++){
-			for(int j = 0 ; j < 28; j++){
+		for(int i = 0; i < length; i++){
+			for(int j = 0 ; j < length; j++){
 				Cell c = new Cell(j,i,0);
 				cells[i][j] = c;
 			}

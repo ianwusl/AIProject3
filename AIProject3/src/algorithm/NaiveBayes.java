@@ -3,23 +3,40 @@ package algorithm;
 import java.util.ArrayList;
 
 import objects.Cell;
-import objects.Digit;
+import objects.TestObject;
 
 public class NaiveBayes {
 	private double[][][] likelihood;
 
 	private double[] frequency, priors;
+	private int dim, data_size;
+	
+	public enum Type{
+		FACE, DIGIT
+	}
 
-	public NaiveBayes(double[] quantity, double[] priors, int k, ArrayList<Digit> digits){
+	public NaiveBayes(double[] quantity, double[] priors, int k, ArrayList<TestObject> digits, Type type){
+		dim = 0;
+		data_size = 0;
+		switch(type){
+			case DIGIT:
+				dim = 28;
+				data_size = 10;
+				break;
+			case FACE:
+				dim = 70;
+				data_size = 2;
+			
+		}
 		//instantiate
-		likelihood = new double[10][28][28];
+		likelihood = new double[10][70][70];
 
 		this.frequency = quantity;
 		this.priors = priors;
 
 		//get total likelihoods
 		for(int i = 0 ; i < digits.size(); i++){
-			Digit d = digits.get(i);
+			TestObject d = digits.get(i);
 			Cell[][] cells = d.getCellArray();
 			for(int j = 0 ; j < cells.length; j++){
 				for(k = 0 ; k < cells.length; k++){
@@ -29,23 +46,25 @@ public class NaiveBayes {
 				}
 			}
 		}
-
+		
 		//laplace smoothing
-		for(int digit = 0; digit < 10; digit++ ){
-			for(int i = 0; i < 28; i++){
-				for(int j = 0; j < 28; j++){
+		for(int digit = 0; digit < data_size; digit++ ){
+			for(int i = 0; i < dim; i++){
+				for(int j = 0; j < dim; j++){
 					likelihood[digit][i][j] = (likelihood[digit][i][j] + k)/(frequency[digit]*k*2);
+					
 				}
 			}
 		}
 	}
 
-	public boolean testDigit(Digit d, int k){
+
+	public boolean test(TestObject d, int k){
 		Cell[][] img = d.getCellArray();
 		double[] probability = new double[10];
 
 		//transfer priors to new array
-		for(int i = 0 ; i < 10 ; i++){
+		for(int i = 0 ; i < data_size ; i++){
 			probability[i] = priors[i];
 		}
 
@@ -54,9 +73,9 @@ public class NaiveBayes {
 		}
 
 		//need help here
-		for(int digit = 0; digit < 10; digit++ ){
-			for(int i = 0; i < 28; i++){
-				for(int j = 0; j < 28; j++){
+		for(int digit = 0; digit < data_size; digit++ ){
+			for(int i = 0; i < img.length; i++){
+				for(int j = 0; j < img.length; j++){
 					if(img[i][j].getData()!=0){
 						probability[digit] += Math.log((likelihood[digit][i][j] + k /frequency[digit]*k*2)) ;
 					}
@@ -66,7 +85,7 @@ public class NaiveBayes {
 
 		//choose the best p
 		int best_p = 0;
-		for(int i = 1; i < 10; i++){
+		for(int i = 1; i < data_size; i++){
 			if(probability[best_p]<probability[i]){
 				best_p = i;
 			}

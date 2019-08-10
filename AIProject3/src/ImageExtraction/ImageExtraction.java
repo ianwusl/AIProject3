@@ -6,8 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import objects.Digit;
-import objects.Face;
+import objects.TestObject;
 
 public class ImageExtraction {
 		private double[] digit_frequency;
@@ -34,8 +33,8 @@ public class ImageExtraction {
 			FACE_TEST, FACE_VALID, FACE_TRAIN, DIGIT_TRAIN, DIGIT_VALID, DIGIT_TEST
 		}
 
-		public ArrayList<Digit> digitExtract(Type type, double[] digit_arr, double total) throws IOException{
-			ArrayList<Digit> digits = new ArrayList<>();
+		public ArrayList<TestObject> imageExtract(Type type) throws IOException{
+			ArrayList<TestObject> digits = new ArrayList<>();
 			String dir1, dir2;
 			switch(type){
 			case DIGIT_TEST:
@@ -49,6 +48,18 @@ public class ImageExtraction {
 			case DIGIT_VALID:
 				dir1 = img1_valid_dir;
 				dir2 = img2_valid_dir;
+				break;
+			case FACE_TEST:
+				dir1 = face1_test_dir;
+				dir2 = face2_test_dir;
+				break;
+			case FACE_TRAIN:
+				dir1 = face1_train_dir;
+				dir2 = face2_train_dir;
+				break;
+			case FACE_VALID:
+				dir1 = face1_valid_dir;
+				dir2 = face2_valid_dir;
 				break;
 			default:
 				dir1 = img1_train_dir;
@@ -84,9 +95,11 @@ public class ImageExtraction {
 			/*
 			 * Image extraction begins here
 			 */
+			int total = 0;
+			double[] digit_arr = new double[10];
 			while((data = data_br.readLine()) != null) {
 				int int_data = Integer.parseInt(data);
-				Digit t = new Digit(int_data);
+				TestObject t = new TestObject(int_data);
 				total++;
 				digit_arr[int_data]++;
 				boolean start = false;
@@ -121,105 +134,17 @@ public class ImageExtraction {
 			data_br.close();
 			image_fr.close();
 			data_fr.close();
-			this.setDigit_frequency(digit_arr);
+			this.setfrequency(digit_arr);
 			this.setTotal(total);
 			return digits;
 		}
 
-		public ArrayList<Face> faceExtract(Type type) throws IOException{
-			ArrayList<Face> face = new ArrayList<>();
-			String dir1, dir2;
-			switch(type){
-			case FACE_TEST:
-				dir1 = face1_test_dir;
-				dir2 = face2_test_dir;
-				break;
-			case FACE_TRAIN:
-				dir1 = face1_train_dir;
-				dir2 = face2_train_dir;
-				break;
-			case FACE_VALID:
-				dir1 = face1_valid_dir;
-				dir2 = face2_valid_dir;
-				break;
-			default:
-				dir1 = face1_train_dir;
-				dir2 = face2_train_dir;
-			}
 
-			/*
-			 * Get data files
-			 */
-
-			File image_file = new File(dir1);
-			File label_file = new File(dir2);
-
-			/*
-			 * Check that file exists
-			 * Get files from file reader
-			 */
-			if(!image_file.exists() || !label_file.exists()) {
-				System.out.println("Files do not exist.");
-				System.exit(-1);
-			}
-			FileReader image_fr = new FileReader(image_file);
-			FileReader data_fr = new FileReader(label_file);
-
-			/*
-			 * Use buffered reader to read from the file input stream (file reader)
-			 */
-			BufferedReader image_br = new BufferedReader(image_fr);
-			BufferedReader data_br = new BufferedReader(data_fr);
-
-			String data = "";
-
-			/*
-			 * Image extraction begins here
-			 */
-			while((data = data_br.readLine()) != null) {
-				int int_data = Integer.parseInt(data);
-				Face t = new Face(int_data);
-				boolean start = false;
-				String line = "";
-				while((line = image_br.readLine()) != null) {
-					if(!start) {
-						if(line.trim().length() != 0) {
-							start = true;
-							t.addToObject(line);
-						}
-					}else {
-						if(line.trim().length() == 0){
-							if(t.isObject()) {
-								break;
-							}else {
-								t.reset();
-								start = false;
-							}
-						}else {
-							t.addToObject(line);
-						}
-					}
-				}
-				face.add(t);
-			}
-
-
-			/*
-			 * Close all readers
-			 */
-			image_br.close();
-			data_br.close();
-			image_fr.close();
-			data_fr.close();
-
-			return face;
-		}
-
-		public double[] getDigit_frequency() {
+		public double[] getfrequency() {
 			return digit_frequency;
 		}
 
-		public void setDigit_frequency(double[] digit_frequency) {
+		public void setfrequency(double[] digit_frequency) {
 			this.digit_frequency = digit_frequency;
 		}
 
