@@ -38,13 +38,22 @@ public class NaiveBayes {
 
 		//run number of time to increase accuracy
 		for(int a = 0; a < repeat; a++){
+
 			//get total likelihoods
 			for(int i = 0 ; i < digits.size(); i++){
+
+				//get the object in the training data
 				TestObject d = digits.get(i);
+
+				//make the object into a 2D cell array
 				Cell[][] cells = d.getCellArray();
+
+				//traverse through cell array for each cell
 				for(int j = 0 ; j < cells.length; j++){
 					for(k = 0 ; k < cells.length; k++){
 						if(cells[j][k].getData() != 0){
+
+							//d.data is the type of object, increase count in cell[j][k] for d.data (digit class)
 							likelihood[d.data][j][k]++;
 						}
 					}
@@ -53,7 +62,7 @@ public class NaiveBayes {
 
 		}
 
-		//laplace smoothing
+		//laplace smoothing for all cells in all digit classes
 		for(int digit = 0; digit < data_size; digit++ ){
 			for(int i = 0; i < dim; i++){
 				for(int j = 0; j < dim; j++){
