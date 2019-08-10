@@ -45,7 +45,7 @@ public class TestObject {
 	public int[][] getIntImage() {
 		int[][] object_2D = new int[object.size()][length];
 		for(int i = 0; i < object.size(); i ++) {
-			String s = new String(object.get(i)).replace(" ", "0").replace("+", "1").replace("#", "1");
+			String s = new String(object.get(i)).replace(" ", "0").replace("+", "1").replace("#", "2");
 			for(int j = 0 ; j < s.length(); j++){
 				String num = s.charAt(j) + "";
 				object_2D[i][j] = Integer.parseInt(num);
