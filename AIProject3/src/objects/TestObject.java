@@ -1,18 +1,13 @@
 package objects;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
-
-import ImageExtraction.LoopDetection;
 
 public class TestObject {
 	protected ArrayList<String> object;
 	public int data;
 	public int assigned_data;
 	int length = 0;
+	private Cell[][] cell_arr;
 
 	public TestObject(int data) {
 		object = new ArrayList<>();
@@ -47,6 +42,18 @@ public class TestObject {
 		return object_2D;
 	}
 
+	public int[][] getIntImage() {
+		int[][] object_2D = new int[object.size()][length];
+		for(int i = 0; i < object.size(); i ++) {
+			String s = new String(object.get(i)).replace(" ", "0").replace("+", "1").replace("#", "1");
+			for(int j = 0 ; j < s.length(); j++){
+				String num = s.charAt(j) + "";
+				object_2D[i][j] = Integer.parseInt(num);
+			}
+		}
+		return object_2D;
+	}
+
 
 	public void assign_value(int i) {
 		assigned_data = i;
@@ -59,6 +66,33 @@ public class TestObject {
 		return false;
 	}
 
+	private Cell[][] createCellArray(){
+		int[][] obj = this.getIntImage();
+		Cell[][] cells = new Cell[28][28];
+		for(int i = 0; i < obj.length; i++){
+			for(int j = 0 ; j < obj[0].length; j++){
+				Cell c = new Cell(j,i,obj[i][j]);
+				cells[i][j] = c;
+			}
+		}
+		return cells;
+	}
+
+	public Cell[][] getCellArray(){
+		if(cell_arr == null){
+			cell_arr = this.createCellArray();
+		}
+		return cell_arr;
+	}
+
+	public void printCellArray(){
+		for(int i = 0; i < cell_arr.length; i++){
+			for(int j = 0 ; j < cell_arr[0].length; j++){
+				System.out.print(cell_arr[i][j]);
+			}
+			System.out.println();
+		}
+	}
 
 	public boolean isObject() {
 		if(object.size()>=10) {

@@ -6,17 +6,12 @@ import ImageExtraction.LoopDetection;
 
 public class Digit extends TestObject {
 	protected ArrayList<String> object_edges;
+	public static double[] digit_arr = new double[10];
+	public static double total;
 
 	public Digit(int data) {
 		super(data);
 		object_edges = new ArrayList<>();
-	}
-
-	public void printEdges() {
-		for(String s: object_edges) {
-			System.out.println(s);
-		}
-		System.out.println("data: " + data);
 	}
 
 	public char[][] edges() {
@@ -71,5 +66,25 @@ public class Digit extends TestObject {
 		}
 		return k > 0? true : false;
 
+	}
+
+	public static double[] getDigitArr(){
+		double[] digits = new double[10];
+		for(int i = 0 ; i < 10; i++){
+			digits[i] = digit_arr[i];
+			System.out.println(i + ": " + digits[i]);
+		}
+		System.out.println();
+		return digits;
+	}
+
+	public static double[] getPrior(){
+		double[] priors = new double[10];
+		for(int i = 0 ; i < 10; i++){
+			priors[i] = digit_arr[i]/total;
+			System.out.println(i + ": " + priors[i]);
+		}
+		System.out.println();
+		return priors;
 	}
 }
