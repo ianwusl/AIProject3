@@ -1,5 +1,6 @@
 package algorithm;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import objects.Cell;
@@ -10,14 +11,15 @@ public class NaiveBayes {
 
 	private double[] frequency, priors;
 	private int dim, data_size;
-	
+
 	public enum Type{
 		FACE, DIGIT
 	}
 
-	public NaiveBayes(double[] quantity, double[] priors, int k, ArrayList<TestObject> digits, Type type){
+	public NaiveBayes(double[] quantity, double[] priors, int k, ArrayList<TestObject> digits, Type type, int repeat){
 		dim = 0;
 		data_size = 0;
+
 		switch(type){
 			case DIGIT:
 				dim = 28;
@@ -26,34 +28,54 @@ public class NaiveBayes {
 			case FACE:
 				dim = 70;
 				data_size = 2;
-			
+
 		}
 		//instantiate
-		likelihood = new double[10][70][70];
+		likelihood = new double[10][dim][dim];
 
 		this.frequency = quantity;
 		this.priors = priors;
 
-		//get total likelihoods
-		for(int i = 0 ; i < digits.size(); i++){
-			TestObject d = digits.get(i);
-			Cell[][] cells = d.getCellArray();
-			for(int j = 0 ; j < cells.length; j++){
-				for(k = 0 ; k < cells.length; k++){
-					if(cells[j][k].getData() != 0){
-						likelihood[d.data][j][k]++;
+		//run number of time to increase accuracy
+		for(int a = 0; a < repeat; a++){
+			//get total likelihoods
+			for(int i = 0 ; i < digits.size(); i++){
+				TestObject d = digits.get(i);
+				Cell[][] cells = d.getCellArray();
+				for(int j = 0 ; j < cells.length; j++){
+					for(k = 0 ; k < cells.length; k++){
+						if(cells[j][k].getData() != 0){
+							likelihood[d.data][j][k]++;
+						}
 					}
 				}
 			}
+
 		}
-		
+
 		//laplace smoothing
 		for(int digit = 0; digit < data_size; digit++ ){
 			for(int i = 0; i < dim; i++){
 				for(int j = 0; j < dim; j++){
 					likelihood[digit][i][j] = (likelihood[digit][i][j] + k)/(frequency[digit]*k*2);
-					
+
 				}
+			}
+		}
+	}
+
+	public void printLikelihood(int data){
+		DecimalFormat df = new DecimalFormat("#.##");
+		if(data <= data_size){
+			for(int i = 0; i < dim ; i++){
+				for(int j = 0; j < dim ; j++){
+					String s = df.format(likelihood[data][i][j]) + "";
+					if(s.equals("0")){
+						s = "0.00";
+					}
+					System.out.print(s + " ");
+				}
+				System.out.println();
 			}
 		}
 	}
