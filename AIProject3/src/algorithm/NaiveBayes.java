@@ -50,11 +50,11 @@ public class NaiveBayes {
 
 				//traverse through cell array for each cell
 				for(int j = 0 ; j < cells.length; j++){
-					for(k = 0 ; k < cells.length; k++){
-						if(cells[j][k].getData() != 0){
+					for(int b = 0 ; b < cells.length; b++){
+						if(cells[j][b].getData() != 0){
 
 							//d.data is the type of object, increase count in cell[j][k] for d.data (digit class)
-							likelihood[d.data][j][k]++;
+							likelihood[d.data][j][b]++;
 						}
 					}
 				}
@@ -112,7 +112,7 @@ public class NaiveBayes {
 
 					//if cell[i][j] has pixel, update probability
 					if(img[i][j].getData()!=0){
-						probability[digit] += Math.log((likelihood[digit][i][j] + k /frequency[digit]*k*2)) ;
+						probability[digit] += Math.log((likelihood[digit][i][j])) ;
 					}
 				}
 			}
@@ -126,7 +126,7 @@ public class NaiveBayes {
 			}
 		}
 
-		//assign the chosen value to the object and checks if they match, returns a boolean
+		//assign the chosen value to the object and returns a boolean
 		d.assign_value(best_p);
 		return d.checkData();
 	}

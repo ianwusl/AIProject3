@@ -21,19 +21,20 @@ public class ImageExtractAndTest {
 		//instantiate naive bayes object with training sample
 		double[] prior_p = getPrior(extract.getfrequency(), extract.getTotal());
 		double[] frequency = extract.getfrequency();
-		
+
 		//params are: #occurence of each digit, prior probability of each digit, k, training data,
-		//			  type of object testing, number of times training data is tested to increased 
+		//			  type of object testing, number of times training data is tested to increased
 		//			  likelihood and accuracy.
-		
+
 		//get a subset of the sample space
-		ArrayList<TestObject> subset = getSampleSet(0.5, sample_space);
-		NaiveBayes nb = new NaiveBayes(frequency,prior_p, 1, subset, NaiveBayes.Type.DIGIT, 1);
-		
+		ArrayList<TestObject> subset1 = getSampleSet(0.5, sample_space);
+		//ArrayList<TestObject> subset2 = getSampleSet(0.5, sample_space);
+		NaiveBayes nb = new NaiveBayes(frequency,prior_p, 1, subset1, NaiveBayes.Type.DIGIT, 1000);
+
 		//print out likelihood array
-		nb.printLikelihood(0);
-		
-		/*
+		//nb.printLikelihood(0);
+
+
 		//extract image for testing
 		ArrayList<TestObject> test = extract.imageExtract(ImageExtraction.Type.DIGIT_TEST);
 
@@ -49,7 +50,7 @@ public class ImageExtractAndTest {
 		System.out.println(matched);
 		System.out.println(test.size());
 		System.out.println("accuracy: " + (matched*1.0)/test.size());
-*/
+
 
 	}
 
@@ -61,10 +62,10 @@ public class ImageExtractAndTest {
 
 		return prior;
 	}
-	
+
 	private static ArrayList<TestObject> getSampleSet(double percentage, ArrayList<TestObject> sample_space){
 		ArrayList<TestObject> sample_set = new ArrayList<>();
-		
+
 		if(percentage >= 0 && percentage <= 1){
 			int sample_set_size = (int)(percentage*sample_space.size());
 			for(int i = 0; i < sample_set_size ; i++){
