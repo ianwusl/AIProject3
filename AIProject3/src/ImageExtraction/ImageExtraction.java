@@ -10,6 +10,9 @@ import objects.Digit;
 import objects.Face;
 
 public class ImageExtraction {
+		private double[] digit_frequency;
+		private double total;
+
 
 	//number image class paths
 		private static final String img1_test_dir = "src/data/digitdata/testimages";
@@ -31,7 +34,7 @@ public class ImageExtraction {
 			FACE_TEST, FACE_VALID, FACE_TRAIN, DIGIT_TRAIN, DIGIT_VALID, DIGIT_TEST
 		}
 
-		public ArrayList<Digit> digitExtract(Type type) throws IOException{
+		public ArrayList<Digit> digitExtract(Type type, double[] digit_arr, double total) throws IOException{
 			ArrayList<Digit> digits = new ArrayList<>();
 			String dir1, dir2;
 			switch(type){
@@ -84,8 +87,8 @@ public class ImageExtraction {
 			while((data = data_br.readLine()) != null) {
 				int int_data = Integer.parseInt(data);
 				Digit t = new Digit(int_data);
-				Digit.total++;
-				Digit.digit_arr[int_data]++;
+				total++;
+				digit_arr[int_data]++;
 				boolean start = false;
 				String line = "";
 				while((line = image_br.readLine()) != null) {
@@ -118,7 +121,8 @@ public class ImageExtraction {
 			data_br.close();
 			image_fr.close();
 			data_fr.close();
-
+			this.setDigit_frequency(digit_arr);
+			this.setTotal(total);
 			return digits;
 		}
 
@@ -209,6 +213,22 @@ public class ImageExtraction {
 			data_fr.close();
 
 			return face;
+		}
+
+		public double[] getDigit_frequency() {
+			return digit_frequency;
+		}
+
+		public void setDigit_frequency(double[] digit_frequency) {
+			this.digit_frequency = digit_frequency;
+		}
+
+		public double getTotal() {
+			return total;
+		}
+
+		public void setTotal(double total) {
+			this.total = total;
 		}
 
 

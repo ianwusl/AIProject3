@@ -69,6 +69,15 @@ public class TestObject {
 	private Cell[][] createCellArray(){
 		int[][] obj = this.getIntImage();
 		Cell[][] cells = new Cell[28][28];
+		
+		//fill up all cells
+		for(int i = 0; i < 28; i++){
+			for(int j = 0 ; j < 28; j++){
+				Cell c = new Cell(j,i,0);
+				cells[i][j] = c;
+			}
+		}
+			
 		for(int i = 0; i < obj.length; i++){
 			for(int j = 0 ; j < obj[0].length; j++){
 				Cell c = new Cell(j,i,obj[i][j]);
@@ -80,7 +89,7 @@ public class TestObject {
 
 	public Cell[][] getCellArray(){
 		if(cell_arr == null){
-			cell_arr = this.createCellArray();
+			cell_arr = this.createCellArray();	
 		}
 		return cell_arr;
 	}
