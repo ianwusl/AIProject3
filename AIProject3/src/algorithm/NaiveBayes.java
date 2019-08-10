@@ -103,10 +103,14 @@ public class NaiveBayes {
 			p = Math.log(p);
 		}
 
-		//need help here
+		/**
+		 * Update probability of each digit class for each cell[i][j]
+		 */
 		for(int digit = 0; digit < data_size; digit++ ){
 			for(int i = 0; i < img.length; i++){
 				for(int j = 0; j < img.length; j++){
+
+					//if cell[i][j] has pixel, update probability
 					if(img[i][j].getData()!=0){
 						probability[digit] += Math.log((likelihood[digit][i][j] + k /frequency[digit]*k*2)) ;
 					}
@@ -114,7 +118,7 @@ public class NaiveBayes {
 			}
 		}
 
-		//choose the best p
+		//choose the best probability
 		int best_p = 0;
 		for(int i = 1; i < data_size; i++){
 			if(probability[best_p]<probability[i]){
@@ -122,6 +126,7 @@ public class NaiveBayes {
 			}
 		}
 
+		//assign the chosen value to the object and checks if they match, returns a boolean
 		d.assign_value(best_p);
 		return d.checkData();
 	}
