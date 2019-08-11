@@ -2,7 +2,7 @@ package algorithm;
 
 public class Perceptron {
 
-  public PerceptronAlgo(){
+  public Perceptron(){
     //this pseudo code assumes 3 features
     double w0=0, w1=0, w2=0, w3=0; //w0=bias term, w1 corresponds to feature 1, w2 corresponds to feature 2, w3 corresponds to feature 3
     int isOver=0;
@@ -33,7 +33,7 @@ public class Perceptron {
          }
       }
       }
-      
-    
+
+
   }
 }

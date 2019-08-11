@@ -16,7 +16,7 @@ public class ImageExtractAndTest {
 		//object to extract images from file
 		ImageExtraction extract = new ImageExtraction();
 		//extract training digits
-		ArrayList<TestObject> sample_space = extract.imageExtract(ImageExtraction.Type.DIGIT_TRAIN);
+		ArrayList<TestObject> sample_space = extract.imageExtract(ImageExtraction.Type.FACE_TRAIN);
 
 		//instantiate naive bayes object with training sample
 		double[] prior_p = getPrior(extract.getfrequency(), extract.getTotal());
@@ -29,14 +29,14 @@ public class ImageExtractAndTest {
 		//get a subset of the sample space
 		ArrayList<TestObject> subset1 = getSampleSet(0.5, sample_space);
 		//ArrayList<TestObject> subset2 = getSampleSet(0.5, sample_space);
-		NaiveBayes nb = new NaiveBayes(frequency,prior_p, 1, subset1, NaiveBayes.Type.DIGIT, 1000);
+		NaiveBayes nb = new NaiveBayes(frequency,prior_p, 1, subset1, NaiveBayes.Type.FACE, 1000);
 
 		//print out likelihood array
 		//nb.printLikelihood(0);
 
 
 		//extract image for testing
-		ArrayList<TestObject> test = extract.imageExtract(ImageExtraction.Type.DIGIT_TEST);
+		ArrayList<TestObject> test = extract.imageExtract(ImageExtraction.Type.FACE_TEST);
 
 		//checking accuracy
 		int matched = 0;

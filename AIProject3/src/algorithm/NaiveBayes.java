@@ -66,7 +66,7 @@ public class NaiveBayes {
 		for(int digit = 0; digit < data_size; digit++ ){
 			for(int i = 0; i < dim; i++){
 				for(int j = 0; j < dim; j++){
-					likelihood[digit][i][j] = (likelihood[digit][i][j] + k)/(frequency[digit]*k*2);
+					likelihood[digit][i][j] = (likelihood[digit][i][j] + k)/(frequency[digit]+k*2);
 
 				}
 			}
