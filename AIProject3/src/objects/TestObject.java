@@ -23,6 +23,10 @@ public class TestObject {
 		object.add(s);
 	}
 
+	public ArrayList<String> getObject(){
+		return object;
+	}
+
 	public void printObject() {
 		for(String s: object) {
 			System.out.println(s);
@@ -34,7 +38,7 @@ public class TestObject {
 	public char[][] object2D() {
 		char[][] object_2D = new char[object.size()][length];
 		for(int i = 0; i < object.size(); i ++) {
-			String s = object.get(i).replace('+', '0').replace('#', '1').replace(' ', '0');
+			String s = object.get(i).replace('+', '1').replace('#', '1');
 
 			char[] s_arr = s.toCharArray();
 
@@ -126,5 +130,22 @@ public class TestObject {
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public boolean equals(Object o){
+		if(o instanceof TestObject){
+			TestObject obj = (TestObject)o;
+			ArrayList<String> obj_arr = obj.getObject();
+			if(this.getObject().size() == obj_arr.size()){
+				for(int i = 0; i < this.getObject().size() ; i++){
+					if(!this.getObject().get(i).equals(obj_arr.get(i))){
+						return false;
+					}
+				}
+				return true;
+			}
+		}
+		return false;
 	}
 }

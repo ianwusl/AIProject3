@@ -3,6 +3,8 @@ package objects;
 public class Cell {
 	private Point point;
 	public int data;
+	public int count;
+	
 
 	public Cell(int x, int y, int data){
 		point = Point.create(x, y);
