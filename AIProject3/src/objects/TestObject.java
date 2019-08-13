@@ -145,6 +145,21 @@ public class TestObject {
 				}
 				return true;
 			}
+		}else if(o instanceof Cell[][]){
+			Cell[][] c = (Cell[][])o;
+			Cell[][] a = this.getCellArray();
+			if(a.length == c.length){
+				if(a[0].length == c[0].length){
+					for(int i = 0 ; i < a.length; i++){
+						for(int j = 0; j < a[0].length; j++){
+							if(a[i][j] != c[i][j]){
+								return false;
+							}
+						}
+					}
+				}
+			}
+			return true;
 		}
 		return false;
 	}

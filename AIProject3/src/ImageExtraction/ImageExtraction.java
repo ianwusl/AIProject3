@@ -156,6 +156,35 @@ public class ImageExtraction {
 			this.total = total;
 		}
 
+		// return a sample set of the type from the sample space, returns all type if the type receieved is more than 9.
+		public static ArrayList<TestObject> getSampleSet(double percentage, ArrayList<TestObject> sample_space, int type){
+
+			ArrayList<TestObject> type_arr = new ArrayList<>();
+			if(type < 10 && type >= 0){
+				for(TestObject t : sample_space){
+					if(t.data == type){
+						type_arr.add(t);
+					}
+				}
+			}else{
+				type_arr = sample_space;
+			}
+
+			ArrayList<TestObject> sample_set = new ArrayList<>();
+
+			if(percentage >= 0 && percentage <= 1){
+				int sample_set_size = (int)(percentage*type_arr.size());
+				for(int i = 0; i < sample_set_size ; i++){
+					int random_index = (int)Math.random()*(type_arr.size()-1);
+					TestObject obj = type_arr.remove(random_index);
+					sample_set.add(obj);
+				}
+				return sample_set;
+			}else{
+				return null;
+			}
+		}
+
 
 
 }
